@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="study.mybatis.cm.mapper.ContractDao">
+    <resultMap id="contractObj" type="study.mybatis.cm.entity.Contract">
+        <result property="contractGroupId" column="contract_group_id" jdbcType="INTEGER"/>
+        <result property="contractName" column="contract_name" jdbcType="VARCHAR"/>
+        <result property="saler" column="saler" jdbcType="VARCHAR"/>
+        <result property="kaId" column="ka_id" jdbcType="INTEGER"/>
+        <result property="contractGroupId" column="contract_group_id" jdbcType="INTEGER"/>
+        <result property="agentId" column="agent_id" jdbcType="INTEGER"/>
+        <result property="custName" column="cust_name" jdbcType="VARCHAR"/>
+        <result property="custPhone" column="cust_phone" jdbcType="VARCHAR"/>
+        <result property="custUrl" column="cust_url" jdbcType="VARCHAR"/>
+        <result property="comments" column="comments" jdbcType="VARCHAR"/>
+        <result property="contractType" column="contract_type" jdbcType="INTEGER"/>
+        <result property="startDate" column="start_date" jdbcType="DATE"/>
+        <result property="endDate" column="end_date" jdbcType="DATE"/>
+        <result property="policyId" column="policy_id" jdbcType="INTEGER"/>
+        <result property="policyType" column="policy_type" jdbcType="INTEGER"/>
+        <result property="policyDetailId" column="policy_detail_id" jdbcType="INTEGER"/>
+        <result property="area" column="area" jdbcType="INTEGER"/>
+        <result property="creator" column="creator" jdbcType="INTEGER"/>
+        <result property="creatorStr" column="creator_name" jdbcType="VARCHAR"/>
+        <result property="updater" column="updater" jdbcType="INTEGER"/>
+        <result property="updaterStr" column="updater_name" jdbcType="VARCHAR"/>
+        <result property="submittor" column="submittor" jdbcType="INTEGER"/>
+        <result property="submittorStr" column="submittor_name" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="submitTime" column="submit_time" jdbcType="TIMESTAMP"/>
+        <result property="ifStandard" column="if_standard" jdbcType="INTEGER"/>
+        <result property="contractAmount" column="contract_amount" jdbcType="DECIMAL"/>
+        <result property="ensureAmount" column="ensure_amount" jdbcType="DECIMAL"/>
+        <result property="ifRecOriginalContract" column="if_rec_original_contract" jdbcType="INTEGER"/>
+        <result property="ifRecDeposit" column="if_received_deposit" jdbcType="INTEGER"/>
+        <result property="arcSerial" column="arc_serial" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="approveTime" column="approve_time" jdbcType="TIMESTAMP"/>
+        <result property="agentName" column="agent_name" jdbcType="VARCHAR"/>
+        <result property="agentNamePrint" column="agent_name_print" jdbcType="VARCHAR"/>
+        <result property="settlementIndustryId" column="settlement_industry_id" jdbcType="INTEGER"/>
+        <result property="tradingAccountId" column="trading_account_id" jdbcType="INTEGER"/>
+        <result property="invoiceTypeId" column="invoice_type_id" jdbcType="INTEGER"/>
+        <result property="isSupplement" column="is_supplement" jdbcType="INTEGER"/>
+        <result property="frameUpDown" column="frame_up_down" jdbcType="INTEGER"/>
+        <result property="path" column="path" jdbcType="VARCHAR"/>
+        <result property="suptCusServer" column="supt_cus_server" jdbcType="VARCHAR"/>
+        <result property="directCustomSaler" column="direct_custom_saler" jdbcType="VARCHAR"/>
+        <result property="channelSaler" column="channel_saler" jdbcType="VARCHAR"/>
+        <result property="kaName" column="ka_name" jdbcType="VARCHAR"/>
+        <result property="parentId" column="parent_id" jdbcType="INTEGER"/>
+        <result property="agentType" column="agent_type" jdbcType="INTEGER"/>
+        <result property="emailEnd" column="email_end" jdbcType="VARCHAR"/>
+        <result property="fax" column="fax" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="zipCode" column="post_code" jdbcType="VARCHAR"/>
+        <result property="address" column="communicate_address" jdbcType="VARCHAR"/>
+        <result property="supplementNo" column="supplement_no" jdbcType="VARCHAR"/>
+        <result property="auditFlowType" column="audit_flow_type" jdbcType="INTEGER"/>
+        <result property="agentAccountPeriod" column="pay_term" jdbcType="INTEGER"/>
+        <result property="ensureAmountType" column="deposit_type" jdbcType="INTEGER"/>
+        <result property="frameAmountPercent" column="deposit_percent" jdbcType="INTEGER"/>
+        <result property="compensationModeErr" column="wrong" jdbcType="VARCHAR"/>
+        <result property="compensationModeErrSupplement" column="wront_supplement" jdbcType="VARCHAR"/>
+        <result property="compensationModeLeak" column="miss" jdbcType="VARCHAR"/>
+        <result property="compensationModeLeakSupplement" column="miss_supplement" jdbcType="VARCHAR"/>
+        <result property="breachClause" column="breach_clause" jdbcType="VARCHAR"/>
+        <result property="commonIfStandard" column="common_if_standard" jdbcType="VARCHAR"/>
+        <result property="contractStatusDetail" column="contract_status_detail" jdbcType="INTEGER"/>
+        <result property="ifNewContract" column="if_new_contract" jdbcType="INTEGER"/>
+        <result property="printTemplateId" column="print_template_id" jdbcType="INTEGER"/>
+        <result property="frameStatusDetail" column="frame_status_detail" jdbcType="INTEGER"/>
+
+        <result property="performOrderCount" column="perform_num" jdbcType="INTEGER"/>
+        <result property="supAgreementCount" column="agreement_num" jdbcType="INTEGER"/>
+        <result property="extraAdAmount" column="extra_ad_amount" jdbcType="DECIMAL"/>
+        <result property="extraAdPresentAmount" column="extra_ad_present_amount" jdbcType="DECIMAL"/>
+        <result property="agentPartyType" column="agent_party_type" jdbcType="INTEGER"/>
+        <result property="contractWirelessAmount" column="contract_wireless_amount" jdbcType="DECIMAL"/>
+        <result property="ifPrint" column="if_print" jdbcType="INTEGER"/>
+        <result property="contractStatusDetailStr" column="contract_status_detail_str"/>
+        <result property="ifOverTimeDeposit" column="if_over_time_deposit"/>
+        <result property="depositOverTime" column="pay_deposit_time"/>
+        <result property="chargedDeposit" column="charged_deposit" jdbcType="INTEGER"/>
+        <result property="unchargedDeposit" column="uncharged_deposit"/>
+        <result property="ifTransferAgent" column="if_transfer_agent" jdbcType="INTEGER"/>
+        <result property="companyGroupId" column="company_group_id" jdbcType="INTEGER"/>
+        <result property="companyGroupName" column="company_group_name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+</mapper>

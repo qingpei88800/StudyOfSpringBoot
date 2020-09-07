@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="study.mybatis.cm.mapper.RebateContractDao">
+
+    <resultMap id="rebateContractObj" type="study.mybatis.cm.entity.RebateContract"
+               extends="study.mybatis.cm.mapper.ContractDao.contractObj">
+        <result property="contractId" column="contract_id" jdbcType="INTEGER"/>
+        <result property="contractName" column="contract_name" jdbcType="INTEGER"/>
+        <result property="processMode" column="process_mode" jdbcType="INTEGER"/>
+        <result property="period" column="period" jdbcType="INTEGER"/>
+        <result property="settlementType" column="settlement_type" jdbcType="INTEGER"/>
+        <result property="status" column="STATUS" jdbcType="INTEGER"/>
+        <result property="contractStatusDetail" column="contract_status_detail" jdbcType="INTEGER"/>
+        <result property="contractStatusDetailStr" column="contract_status_detail_str" jdbcType="VARCHAR"/>
+        <result property="frameStatusDetail" column="frame_status_detail" jdbcType="INTEGER"/>
+        <result property="needBidPerformOrder" column="need_bid_perform_order" jdbcType="INTEGER"/>
+        <result property="policyName" column="policy_name" jdbcType="VARCHAR"/>
+        <result property="policyId" column="policy_id" jdbcType="VARCHAR"/>
+        <result property="policyStartTime" column="start_time" jdbcType="DATE"/>
+        <result property="policyEndTime" column="end_time" jdbcType="DATE"/>
+        <result property="rebateContractType" column="rebate_contract_type" jdbcType="INTEGER"/>
+        <result property="groupId" column="group_id" jdbcType="INTEGER"/>
+        <result property="groupName" column="group_name" jdbcType="VARCHAR"/>
+        <result property="salerId" column="saler_id" jdbcType="INTEGER"/>
+        <result property="ifPrint" column="if_print" jdbcType="INTEGER"/>
+        <result property="submitUser" column="submit_user" jdbcType="VARCHAR"/>
+        <result property="supAgreementCount" column="agreement_num" jdbcType="INTEGER"/>
+        <result property="printTemplateBhbId" column="print_template_bhb_id" jdbcType="INTEGER"/>
+        <result property="tradingAccountId" column="trading_account_id" jdbcType="INTEGER"/>
+        <collection property="agents" javaType="ArrayList"
+                    ofType="study.mybatis.cm.entity.RebateContractAgent">
+            <result property="id" column="re_id" jdbcType="INTEGER"/>
+            <result property="contractName" column="re_contract_name" jdbcType="VARCHAR"/>
+            <result property="agentId" column="re_agent_id" jdbcType="INTEGER"/>
+            <result property="agentName" column="re_agent_name" jdbcType="VARCHAR"/>
+            <result property="agentNamePrint" column="re_agent_name_print" jdbcType="VARCHAR"/>
+            <result property="postCode" column="post_code" jdbcType="VARCHAR"/>
+            <result property="address" column="communicate_address" jdbcType="VARCHAR"/>
+            <result property="fax" column="fax" jdbcType="VARCHAR"/>
+            <result property="custName" column="cust_name" jdbcType="VARCHAR"/>
+            <result property="custPhone" column="cust_phone" jdbcType="VARCHAR"/>
+            <result property="email" column="email" jdbcType="VARCHAR"/>
+            <result property="isUsePrintName" column="is_use_print_name" jdbcType="INTEGER"/>
+            <result property="printFlag" column="print_flag" jdbcType="INTEGER"/>
+        </collection>
+    </resultMap>
+
+
+    <!-- 获取返点合同信息 -->
+    <select id="getRebContractInfo" parameterType="study.mybatis.cm.entity.RebateContract"
+            resultMap="rebateContractObj">
+        SELECT
+        c.contract_id, c.contract_name, c.saler_id, u4.real_name saler, c.start_date, c.end_date, c.policy_id,
+        c.if_standard, c.comments, c.create_time, c.update_time,
+        c.submit_time, c.status, c.rebate_contract_type,
+        CASE rebate_contract_type WHEN 0 THEN c.agent_name END agent_name,
+        CASE rebate_contract_type WHEN 0 THEN c.agent_id END agent_id,
+        CASE rebate_contract_type WHEN 1 THEN c.agent_name END group_name,
+        CASE rebate_contract_type WHEN 1 THEN c.agent_id END group_id,
+        c.trading_account_id, c.invoice_type_id, c.agent_type,
+        c.process_mode, c.period, c.settlement_type, c.need_bid_perform_order, c.creator, u1.real_name creator_name,
+        u2.real_name updater_name, c.submittor, u3.real_name submittor_name,
+        a.agent_id re_agent_id, a.agent_name re_agent_name, a.agent_name_print re_agent_name_print, c.agent_party_type
+        agent_party_type ,c.if_rec_original_contract,
+        c.agreement_num, c.email_end, c.period, c.wrong,
+        c.wront_supplement,c.miss,c.miss_supplement,c.breach_clause,c.common_if_standard,c.contract_status_detail,c.frame_status_detail,
+        c.if_print,c.print_template_id,c.print_template_bhb_id, c.if_new_contract,a.id re_id, a.contract_name
+        re_contract_name,a.is_use_print_name, a.communicate_address,
+        a.post_code,a.fax,a.cust_name,a.cust_phone,a.email,c.arc_serial,a.print_flag,p.policy_type,p.policy_name
+        FROM
+        `t_rebate_contract` c
+        LEFT JOIN t_policy p
+        ON p.policy_id=c.policy_id
+        LEFT JOIN `t_user_info` u1
+        ON c.creator = u1.user_id
+        LEFT JOIN `t_user_info` u2
+        ON c.updater = u2.user_id
+        LEFT JOIN `t_user_info` u3
+        ON c.submittor = u3.user_id
+        LEFT JOIN `t_user_info` u4
+        ON c.saler_id = u4.user_id
+        join t_rebate_contract_agent a
+        on a.contract_name = c.contract_name
+        WHERE a.if_del = 0
+        <if test="contractId != null">
+            AND c.contract_id = #{contractId}
+        </if>
+        <if test="contractName != null">
+            AND c.contract_name = #{contractName}
+        </if>
+    </select>
+    <select id="getRebContractInfoList" parameterType="study.mybatis.cm.entity.RebateContract"
+            resultMap="rebateContractObj">
+        SELECT
+        c.contract_id, c.contract_name, c.saler_id, u4.real_name saler, c.start_date, c.end_date, c.policy_id,
+        c.if_standard, c.comments, c.create_time, c.update_time,
+        c.submit_time, c.status, c.rebate_contract_type,
+        CASE rebate_contract_type WHEN 0 THEN c.agent_name END agent_name,
+        CASE rebate_contract_type WHEN 0 THEN c.agent_id END agent_id,
+        CASE rebate_contract_type WHEN 1 THEN c.agent_name END group_name,
+        CASE rebate_contract_type WHEN 1 THEN c.agent_id END group_id,
+        c.trading_account_id, c.invoice_type_id, c.agent_type,
+        c.process_mode, c.period, c.settlement_type, c.need_bid_perform_order, c.creator, u1.real_name creator_name,
+        u2.real_name updater_name, c.submittor, u3.real_name submittor_name,
+        a.agent_id re_agent_id, a.agent_name re_agent_name, a.agent_name_print re_agent_name_print, c.agent_party_type
+        agent_party_type ,c.if_rec_original_contract,
+        c.agreement_num, c.email_end, c.period, c.wrong,
+        c.wront_supplement,c.miss,c.miss_supplement,c.breach_clause,c.common_if_standard,c.contract_status_detail,c.frame_status_detail,
+        c.if_print,c.print_template_id,c.print_template_bhb_id, c.if_new_contract,a.id re_id, a.contract_name
+        re_contract_name,a.is_use_print_name, a.communicate_address,
+        a.post_code,a.fax,a.cust_name,a.cust_phone,a.email,c.arc_serial,a.print_flag,p.policy_type,p.policy_name
+        FROM
+        `t_rebate_contract` c
+        LEFT JOIN t_policy p
+        ON p.policy_id=c.policy_id
+        LEFT JOIN `t_user_info` u1
+        ON c.creator = u1.user_id
+        LEFT JOIN `t_user_info` u2
+        ON c.updater = u2.user_id
+        LEFT JOIN `t_user_info` u3
+        ON c.submittor = u3.user_id
+        LEFT JOIN `t_user_info` u4
+        ON c.saler_id = u4.user_id
+        join t_rebate_contract_agent a
+        on a.contract_name = c.contract_name
+        WHERE a.if_del = 0
+        <if test="contractId != null">
+            AND c.contract_id = #{contractId}
+        </if>
+        <if test="contractName != null">
+            AND c.contract_name = #{contractName}
+        </if>
+    </select>
+
+    <select id="getRebateContract" parameterType="study.mybatis.cm.entity.RebateContract"
+            resultMap="rebateContractObj">
+        select
+        contract_id,
+        rebate_contract_type,
+        agent_party_type,
+        contract_name,
+        saler_id,
+        start_date,
+        end_date,
+        agent_id,
+        agent_name,
+        policy_id,
+        if_standard,
+        if_rec_original_contract,
+        arc_serial,
+        comments,
+        creator,
+        create_time,
+        updater,
+        update_time,
+        submittor,
+        submit_time,
+        status,
+        approve_time,
+        agreement_num,
+        email_end,
+        period,
+        wrong,
+        wront_supplement,
+        miss,
+        miss_supplement,
+        breach_clause,
+        common_if_standard,
+        contract_status_detail,
+        frame_status_detail,
+        if_print,
+        print_template_id,
+        process_mode,
+        settlement_type,
+        need_bid_perform_order,
+        trading_account_id,
+        invoice_type_id,
+        agent_type,
+        if_new_contract,
+        sogou_fax,
+        print_template_bhb_id
+        from t_rebate_contract
+        <where>
+            <if test="contractId != null">
+                AND contract_id = #{contractId}
+            </if>
+            <if test="contractName != null">
+                AND contract_name = #{contractName}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>

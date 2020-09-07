@@ -1,9 +1,14 @@
 package study;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * @author liuqingpei
+ */
 @SpringBootApplication
+@MapperScan("study.mybatis")
 public class DemoApplication {
 
 
