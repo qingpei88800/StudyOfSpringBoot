@@ -4,8 +4,8 @@
 
 <mapper namespace="study.mybatis.cm.mapper.ContractDao">
     <resultMap id="contractObj" type="study.mybatis.cm.entity.Contract">
+        <id property="contractId" column="contract_id" jdbcType="INTEGER"/>
         <result property="contractGroupId" column="contract_group_id" jdbcType="INTEGER"/>
-        <result property="contractName" column="contract_name" jdbcType="VARCHAR"/>
         <result property="saler" column="saler" jdbcType="VARCHAR"/>
         <result property="kaId" column="ka_id" jdbcType="INTEGER"/>
         <result property="contractGroupId" column="contract_group_id" jdbcType="INTEGER"/>

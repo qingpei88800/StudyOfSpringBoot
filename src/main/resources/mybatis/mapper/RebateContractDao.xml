@@ -6,8 +6,9 @@
 
     <resultMap id="rebateContractObj" type="study.mybatis.cm.entity.RebateContract"
                extends="study.mybatis.cm.mapper.ContractDao.contractObj">
-        <result property="contractId" column="contract_id" jdbcType="INTEGER"/>
-        <result property="contractName" column="contract_name" jdbcType="INTEGER"/>
+        <!--        <id property="contractId" column="contract_id" jdbcType="INTEGER"/>-->
+        <!--        <id property="contractName" column="contractName" jdbcType="INTEGER"/>-->
+        <!--        <result property="contractId" column="contract_id" jdbcType="INTEGER"/>-->
         <result property="processMode" column="process_mode" jdbcType="INTEGER"/>
         <result property="period" column="period" jdbcType="INTEGER"/>
         <result property="settlementType" column="settlement_type" jdbcType="INTEGER"/>
@@ -91,106 +92,18 @@
             AND c.contract_name = #{contractName}
         </if>
     </select>
-    <select id="getRebContractInfoList" parameterType="study.mybatis.cm.entity.RebateContract"
-            resultMap="rebateContractObj">
-        SELECT
-        c.contract_id, c.contract_name, c.saler_id, u4.real_name saler, c.start_date, c.end_date, c.policy_id,
-        c.if_standard, c.comments, c.create_time, c.update_time,
-        c.submit_time, c.status, c.rebate_contract_type,
-        CASE rebate_contract_type WHEN 0 THEN c.agent_name END agent_name,
-        CASE rebate_contract_type WHEN 0 THEN c.agent_id END agent_id,
-        CASE rebate_contract_type WHEN 1 THEN c.agent_name END group_name,
-        CASE rebate_contract_type WHEN 1 THEN c.agent_id END group_id,
-        c.trading_account_id, c.invoice_type_id, c.agent_type,
-        c.process_mode, c.period, c.settlement_type, c.need_bid_perform_order, c.creator, u1.real_name creator_name,
-        u2.real_name updater_name, c.submittor, u3.real_name submittor_name,
-        a.agent_id re_agent_id, a.agent_name re_agent_name, a.agent_name_print re_agent_name_print, c.agent_party_type
-        agent_party_type ,c.if_rec_original_contract,
-        c.agreement_num, c.email_end, c.period, c.wrong,
-        c.wront_supplement,c.miss,c.miss_supplement,c.breach_clause,c.common_if_standard,c.contract_status_detail,c.frame_status_detail,
-        c.if_print,c.print_template_id,c.print_template_bhb_id, c.if_new_contract,a.id re_id, a.contract_name
-        re_contract_name,a.is_use_print_name, a.communicate_address,
-        a.post_code,a.fax,a.cust_name,a.cust_phone,a.email,c.arc_serial,a.print_flag,p.policy_type,p.policy_name
-        FROM
-        `t_rebate_contract` c
-        LEFT JOIN t_policy p
-        ON p.policy_id=c.policy_id
-        LEFT JOIN `t_user_info` u1
-        ON c.creator = u1.user_id
-        LEFT JOIN `t_user_info` u2
-        ON c.updater = u2.user_id
-        LEFT JOIN `t_user_info` u3
-        ON c.submittor = u3.user_id
-        LEFT JOIN `t_user_info` u4
-        ON c.saler_id = u4.user_id
-        join t_rebate_contract_agent a
-        on a.contract_name = c.contract_name
-        WHERE a.if_del = 0
-        <if test="contractId != null">
-            AND c.contract_id = #{contractId}
-        </if>
-        <if test="contractName != null">
-            AND c.contract_name = #{contractName}
-        </if>
-    </select>
 
-    <select id="getRebateContract" parameterType="study.mybatis.cm.entity.RebateContract"
+    <select id="getInfo" parameterType="study.mybatis.cm.entity.RebateContract"
             resultMap="rebateContractObj">
-        select
-        contract_id,
-        rebate_contract_type,
-        agent_party_type,
-        contract_name,
-        saler_id,
-        start_date,
-        end_date,
-        agent_id,
-        agent_name,
-        policy_id,
-        if_standard,
-        if_rec_original_contract,
-        arc_serial,
-        comments,
-        creator,
-        create_time,
-        updater,
-        update_time,
-        submittor,
-        submit_time,
-        status,
-        approve_time,
-        agreement_num,
-        email_end,
-        period,
-        wrong,
-        wront_supplement,
-        miss,
-        miss_supplement,
-        breach_clause,
-        common_if_standard,
-        contract_status_detail,
-        frame_status_detail,
-        if_print,
-        print_template_id,
-        process_mode,
-        settlement_type,
-        need_bid_perform_order,
-        trading_account_id,
-        invoice_type_id,
-        agent_type,
-        if_new_contract,
-        sogou_fax,
-        print_template_bhb_id
-        from t_rebate_contract
+        select c.* from t_rebate_contract c
         <where>
             <if test="contractId != null">
-                AND contract_id = #{contractId}
+                AND c.contract_id = #{contractId}
             </if>
             <if test="contractName != null">
-                AND contract_name = #{contractName}
+                AND c.contract_name = #{contractName}
             </if>
         </where>
     </select>
-
 
 </mapper>
